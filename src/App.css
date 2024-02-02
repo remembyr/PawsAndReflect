@@ -2,30 +2,139 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  background-color: #b6c197;
+  font-size: large;
+  padding: 2rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+#journal {
+  width: 100%;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.leftSide {
+  font-weight: 500;
+  color: #8A9B68;
+}
+
+.containerGreen {
+  background-color: #D5DDBC;
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+.submit-button {
+  display: inline-block;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: #8A9B68;
+  color: #D5DDBC;
+  transition: background-color 0.3s ease;
+}
+
+.menu-button {
+  display: inline-block;
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: #D5DDBC;
+  color: #8A9B68;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+.menu-button:hover {
+  background-color: #b6c197;
+  width: 100%;
+  color: #67744e
+}
+
+.submit-button:hover {
+  background-color: #67744e;
+}
+
+.right {
+  justify-content: right;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.Title {
+  text-align: center;
+  font-size: xx-large;
+  color: #eaf3ce;
+  font-weight: bold;
+  padding-bottom: 30px;
+}
+
+.modal {
+  display: block;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #D5DDBC;
+  margin: 13% auto;
+  padding: 15px;
+  border: 1px solid #888;
+  width: 50%;
+  
+}
+
+.imageContainer {
+  padding-top: 50%;
+  padding-bottom: 50%;
+  background-color: #a9b396;
+  display: flex;
+  justify-content: center;
+  color:#67744e;
+  text-align: center;
+}
+
+.rightAlign {
+  justify-content: right;
+  display: inline-flex;
+}
+
+.helpContent {
+  display: flex;
+  padding-bottom: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  font-size: 1.5rem;
+}
+
+.close {
+  color: #ffffff;
+  font-size: 28px;
+  transition: background-color 0.3s ease;
+  font-weight: bold;
+  border-radius: 5px;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-bottom: 0.25rem;
+  display: flex;
+}
+
+.close:hover {
+  background-color: #67744e;
 }
 
 @keyframes App-logo-spin {
