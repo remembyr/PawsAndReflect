@@ -1,5 +1,7 @@
 import './App.css';
-import React, { useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
+import titleCat from './images/titleCat.gif';
+import loadingCat from './images/loadingCat.gif';
 import OpenAI from "openai";
 
 function App() {
@@ -52,7 +54,7 @@ function App() {
     } else {
       setImageExists(false);
     }
-
+    setUsedEntry('');
   }, [entryToImagine])
 
   const handleDownload = () => {
@@ -107,21 +109,25 @@ function App() {
     <div className="container-fluid">
       <div className="row">
         <div className='Title col-md-12'>
-            <img src="https://ci3.googleusercontent.com/mail-img-att/APrP3qFOw75SBEFTNhTbQr44yuPza8tqryqTn7BzikFflNs0wVBk4UDpzxiODqr5fpE8rxhHTG0YoEyse7bSeI671-pVvgQwpQDxV1E8dLCTrcWhyDnll-onb92BdQigQi_mJMLh3CHnFHoweHeUNtFQHE0HoIV-MMfipaDp44QN4m_RuNLovEvoFqDPtaKd4H3qSDgpOizDUYCSlrQwAkgdqmHILw-6fGiYe33eegBZ3GKonKgG7OUxSGcxYph4Ejwuln-C4CNh7vpFa1QJjCFbkmtVYr1eCeLk3Xopu1UQGAqwOxwkHLsns94U_h-v0spRJh6q1SAI5YvNwalc05JL76SAMHBMdCKSfnfLult8tbFo-LGCuaZ9iUszW4yjKX6d6bKv9RxpUx-RA8iX7nNlaFnr26JoVV-lPrnvpHnddqRsmk_jUrcwYMbanf-5XhT-jSQEx2I4o79p9dddjm4zXKAmtaYK1vma3x7Rek8z9Bdjjhv2QyodcU-pPPmaatjTlsvFJIRvfJmWEuumAOCX3bP-m2Rl1l58N4inKTD9GqZs0iVXs7iD6oYhOXsn_PlOGDpYo2VTUsUwBkJfrCxHwTvp0M9uLz3v3OGpg8g0B3a8N4gjY_JkgDez1VKEm-Uc3ZWiSPPywblGt315Cm3CM8ZuCuAKZ1awjXNWWKP1TEc-KnRTr0toaLY9Crd4ZnK3A_hxYTiIqY7witdG0FT3hUmX91dLx14PYsYa-j_FHPb6arDVUn5I6Z-Pvep38XJQ2PFdzLeUdohIiIlDRavP0jZXNhNQsNoAhPaKU4Q2X6a1nuhB_63BHxWP2ezzjrQYQ7Yla23FbGxYmsJrDLVOfgJ1p2xfj6dNLycELNW4Q0eWdPvJSoiZhcrBZINbpXsvLiFcCZW1sxS8_cudnxpR-9NH_1N3sIQ9ah2Wz_OXrdh4UMLi6MMWLK4wXZLcqdWoy4n08UkCxS8yZDFzC86nmZBJHzxFVNGomIhlF1HPD4iYewFXyJKcjC5efFi3QN7-Ru9i-GXiZGa8uErS6YNHSB2naCwKQzbFvRRPrb-74aVmktYFA8Qlpg=s0-l75-ft" height="45rem"/>
+            <img src={titleCat} height="45rem"/>
             PawsAndReflect
-            <img src="https://ci3.googleusercontent.com/mail-img-att/APrP3qFOw75SBEFTNhTbQr44yuPza8tqryqTn7BzikFflNs0wVBk4UDpzxiODqr5fpE8rxhHTG0YoEyse7bSeI671-pVvgQwpQDxV1E8dLCTrcWhyDnll-onb92BdQigQi_mJMLh3CHnFHoweHeUNtFQHE0HoIV-MMfipaDp44QN4m_RuNLovEvoFqDPtaKd4H3qSDgpOizDUYCSlrQwAkgdqmHILw-6fGiYe33eegBZ3GKonKgG7OUxSGcxYph4Ejwuln-C4CNh7vpFa1QJjCFbkmtVYr1eCeLk3Xopu1UQGAqwOxwkHLsns94U_h-v0spRJh6q1SAI5YvNwalc05JL76SAMHBMdCKSfnfLult8tbFo-LGCuaZ9iUszW4yjKX6d6bKv9RxpUx-RA8iX7nNlaFnr26JoVV-lPrnvpHnddqRsmk_jUrcwYMbanf-5XhT-jSQEx2I4o79p9dddjm4zXKAmtaYK1vma3x7Rek8z9Bdjjhv2QyodcU-pPPmaatjTlsvFJIRvfJmWEuumAOCX3bP-m2Rl1l58N4inKTD9GqZs0iVXs7iD6oYhOXsn_PlOGDpYo2VTUsUwBkJfrCxHwTvp0M9uLz3v3OGpg8g0B3a8N4gjY_JkgDez1VKEm-Uc3ZWiSPPywblGt315Cm3CM8ZuCuAKZ1awjXNWWKP1TEc-KnRTr0toaLY9Crd4ZnK3A_hxYTiIqY7witdG0FT3hUmX91dLx14PYsYa-j_FHPb6arDVUn5I6Z-Pvep38XJQ2PFdzLeUdohIiIlDRavP0jZXNhNQsNoAhPaKU4Q2X6a1nuhB_63BHxWP2ezzjrQYQ7Yla23FbGxYmsJrDLVOfgJ1p2xfj6dNLycELNW4Q0eWdPvJSoiZhcrBZINbpXsvLiFcCZW1sxS8_cudnxpR-9NH_1N3sIQ9ah2Wz_OXrdh4UMLi6MMWLK4wXZLcqdWoy4n08UkCxS8yZDFzC86nmZBJHzxFVNGomIhlF1HPD4iYewFXyJKcjC5efFi3QN7-Ru9i-GXiZGa8uErS6YNHSB2naCwKQzbFvRRPrb-74aVmktYFA8Qlpg=s0-l75-ft" height="45rem"/>
+            <img src={titleCat} height="45rem"/>
         </div>
 
       </div>
       <div className="row">
         <div className='col-md-5'>
           <div className='containerGreen container leftSide'>
-          {(imageExists && !isLoading) ? 
-            <img src={imageURL} alt="Journal Entry Image" class="responsiveImage"/> : 
+            {!imageExists && !isLoading && 
             <div className='imageContainer'>
               <span style={{paddingLeft: 10, paddingRight: 10}}>Hit "Imagine" to generate an image.</span>
             </div>}
-            
+            {imageExists && !isLoading && 
+              <img src={imageURL} alt="Journal Entry Image" class="responsiveImage"/> }
+            {isLoading && 
+            <div className='imageContainer' id="loadingCatContainer">
+              <img src={loadingCat} id="loadingCat" height="200rem"/>
+            </div>}
           </div>
         </div>
         <div className='col-md-5'>
@@ -135,7 +141,7 @@ function App() {
         <div className='col-md-2'>
           <div className='containerGreen container leftSide'>
               <button className="menu-button" onClick={handleDownload}>Download Entry</button><br></br>
-              <button className="menu-button" onClick={handleClear}>Clear All</button><br></br>
+              <button className="menu-button" onClick={handleClear}>Clear Text</button><br></br>
               <button className="menu-button" onClick={openHelpModal}>Help</button>
           </div>
         </div>

@@ -99,8 +99,8 @@ body {
 }
 
 .imageContainer {
-  padding-top: 50%;
-  padding-bottom: 50%;
+  padding-top: 45%;
+  padding-bottom: 45%;
   background-color: #a9b396;
   display: flex;
   justify-content: center;
@@ -109,8 +109,8 @@ body {
 }
 
 .responsiveImage {
-  width: 100%;    /* Makes the image take up the full width of its parent */
-  height: auto;   /* Scales the height according to the aspect ratio */
+  width: 100%; 
+  height: auto;
 }
 
 .rightAlign {
@@ -140,6 +140,15 @@ body {
 
 .close:hover {
   background-color: #67744e;
+}
+
+#loadingCatContainer {
+  padding-top: 29%;
+  padding-bottom: 29%;
+}
+
+#loadingCat {
+  transition: opacity 1s ease-in;
 }
 
 @keyframes App-logo-spin {
