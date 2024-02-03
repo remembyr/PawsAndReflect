@@ -1,10 +1,55 @@
 import './App.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 function App() {
 
   const [journalEntry, setJournalEntry] = useState('');
+  const [usedEntry, setUsedEntry] = useState('');
   const [isHelpModalOpen, setHelpModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [imageExists, setImageExists] = useState(false);
+  const [imageURL, setImageURL] = useState('');
+    
+
+  useEffect(()=>{
+    if (usedEntry !== '') {
+      async function query(data) {
+        setIsLoading(true);
+        try {
+          const response = await fetch(
+            "https://api-inference.huggingface.co/models/openskyml/dalle-3-xl",
+            {
+              headers: { Authorization: "Bearer {API_TOKEN}" },
+              method: "POST",
+              body: JSON.stringify(data),
+            }
+          );
+          const result = await response.blob();
+          // setData(result);
+          //setImageURL(URL.createObjectURL(result));
+          //console.log(URL.createObjectURL(result));
+          console.log(result);
+          setImageExists(true);
+          return result;
+        } catch (error) {
+          alert('Error getting the message!')
+        } finally { 
+          setIsLoading(false);
+        }
+
+      }
+      query({"inputs": {usedEntry}}).then((response) => {
+        // Use image
+        setImageURL(URL.createObjectURL(response));
+        console.log(URL.createObjectURL(response));
+      });
+
+
+    } else {
+      setImageExists(false);
+    }
+
+  }, [usedEntry])
 
   const handleDownload = () => {
     const blob = new Blob([journalEntry], { type: 'text/plain' });
@@ -36,8 +81,7 @@ function App() {
   }
 
   const handleImagine = () => {
-    alert('Code this thing first')
-    //code here
+    setUsedEntry(journalEntry);
   }
 
   return (
@@ -65,9 +109,12 @@ function App() {
       <div className="row">
         <div className='col-md-5'>
           <div className='containerGreen container leftSide'>
+          {(imageExists && !isLoading) ? 
+            <img src={imageURL}></img> : 
             <div className='imageContainer'>
               <span style={{paddingLeft: 10, paddingRight: 10}}>Hit "Imagine" to generate an image.</span>
-            </div>
+            </div>}
+            
           </div>
         </div>
         <div className='col-md-5'>
