@@ -1,51 +1,57 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
+import OpenAI from "openai";
 
 function App() {
 
+  const openai = new OpenAI({apiKey: process.env.REACT_APP_OPENAI_API_KEY, dangerouslyAllowBrowser: true });
+
   const [journalEntry, setJournalEntry] = useState('');
-  const [usedEntry, setUsedEntry] = useState('');
+  const [entryToImagine, setUsedEntry] = useState('');
   const [isHelpModalOpen, setHelpModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [imageExists, setImageExists] = useState(false);
   const [imageURL, setImageURL] = useState('');
-    
 
-  useEffect(()=>{
-    if (usedEntry !== '') {
-      
-      query({"inputs": {usedEntry}}).then((response) => {
-        // Use image
-        setImageURL(URL.createObjectURL(response));
-        console.log(URL.createObjectURL(response));
-      });
+  async function generateDescription(entry) {
+    const response = await openai.chat.completions.create({
+      messages: [{"role": "system", "content": "Generate a concise but detailed description of a funny image where the main characters are all cats. No humans. \
+      The description should capture the actions and feelings described in the following journal entry. This is the journal entry: \" " + entry + "\""}],
+      model: "gpt-3.5-turbo",
+    });
+    console.log(response);
+    return response.choices[0].message.content;
+  }
 
-    } else {
-      setImageExists(false);
-    }
 
-  }, [usedEntry])
-
-  async function query(data) {
-    setIsLoading(true);
-    try {
-      const response = await fetch(
-        "https://api-inference.huggingface.co/models/openskyml/dalle-3-xl",
-        {
-          headers: { Authorization: "Bearer {API_TOKEN}" },
-          method: "POST",
-          body: JSON.stringify(data),
-        }
-      );
-      const result = await response.blob();
+  async function generateImageFromDescription(description) {
+      const imageResponse = await openai.images.generate({ model: "dall-e-3", prompt:description});
+      const URLResponse = imageResponse.data[0].url; // This returns the URL of the generated image
+      setImageURL(URLResponse);
       setImageExists(true);
-      return result;
+  }
+
+  async function entryToImage(entry) {
+    setIsLoading(true);
+    try { 
+      const generatedDescription = await generateDescription(entry).then(
+        (URLResponse) => generateImageFromDescription(URLResponse)
+      );
     } catch (error) {
-      console.error("Error fetching image");
+      console.error("Error generating cute cat image sry :(", error);
     } finally { 
       setIsLoading(false);
     }
   }
+
+  useEffect(()=>{
+    if (entryToImagine !== '') {
+      entryToImage(entryToImagine);
+    } else {
+      setImageExists(false);
+    }
+
+  }, [entryToImagine])
 
   const handleDownload = () => {
     const blob = new Blob([journalEntry], { type: 'text/plain' });
