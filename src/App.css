@@ -124,6 +124,7 @@ body {
   padding-left: 1rem;
   padding-right: 1rem;
   font-size: 1.5rem;
+  color: #67744e;
 }
 
 .close {
@@ -143,8 +144,12 @@ body {
 }
 
 #loadingCatContainer {
+  display: inline-block;
+  width: 100%;
   padding-top: 29%;
   padding-bottom: 29%;
+  justify-content: center;
+  align-items: center;
 }
 
 #loadingCat {

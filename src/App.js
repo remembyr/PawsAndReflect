@@ -14,6 +14,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [imageExists, setImageExists] = useState(false);
   const [imageURL, setImageURL] = useState('');
+  const [loadingMessage, setLoadingMessage] = useState('I\'m feline fine!');
 
   async function generateDescription(entry) {
     const response = await openai.chat.completions.create({
@@ -78,6 +79,10 @@ function App() {
     setJournalEntry("");
   }
 
+  const handleClearImage = () => {
+    setImageExists(false);
+  }
+
   const openHelpModal = () => {
     setHelpModalOpen(true);
   }
@@ -89,6 +94,26 @@ function App() {
   const handleImagine = () => {
     setUsedEntry(journalEntry);
     console.log('[SUCCESS] Imagine Started')
+  }
+
+  const handleLoadMessage = () => {
+      const randomNumber = Math.floor(Math.random() * 10) + 1;
+
+      const messages = [
+        "Meow you're talking!",
+        "Pawsitive vibes only :)",
+        "Get the meowtivation to journal!",
+        "Purrserverance is key",
+        "Stay paw-sitive",
+        "Fur-tunate for today",
+        "Meowments of bliss",
+        "Catitude for gratitude",
+        "I could use a catnap!",
+        "Have a pawsome day!"
+      ];
+
+      const selectedString = messages[randomNumber - 1];
+      setLoadingMessage(selectedString);
   }
 
   return (
@@ -108,12 +133,15 @@ function App() {
     )}
     <div className="container-fluid">
       <div className="row">
-        <div className='Title col-md-12'>
-            <img src={titleCat} height="45rem"/>
-            PawsAndReflect
+      <div className='Title col-md-1'>
             <img src={titleCat} height="45rem"/>
         </div>
-
+        <div className='Title col-md-10'>
+            PawsAndReflect
+        </div>
+        <div className='Title col-md-1'>
+            <img src={titleCat} height="45rem"/>
+        </div>
       </div>
       <div className="row">
         <div className='col-md-5'>
@@ -126,7 +154,8 @@ function App() {
               <img src={imageURL} alt="Journal Entry Image" class="responsiveImage"/> }
             {isLoading && 
             <div className='imageContainer' id="loadingCatContainer">
-              <img src={loadingCat} id="loadingCat" height="200rem"/>
+              <img src={loadingCat} id="loadingCat" height="200rem" onClick={handleLoadMessage}/><br/>
+              {loadingMessage}
             </div>}
           </div>
         </div>
@@ -141,7 +170,9 @@ function App() {
         <div className='col-md-2'>
           <div className='containerGreen container leftSide'>
               <button className="menu-button" onClick={handleDownload}>Download Entry</button><br></br>
+              <button className="menu-button" >Download Image</button><br></br>
               <button className="menu-button" onClick={handleClear}>Clear Text</button><br></br>
+              <button className="menu-button" onClick={handleClearImage}>Clear Image</button><br></br>
               <button className="menu-button" onClick={openHelpModal}>Help</button>
           </div>
         </div>
