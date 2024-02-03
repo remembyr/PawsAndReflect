@@ -15,7 +15,9 @@ function App() {
 
   async function generateDescription(entry) {
     const response = await openai.chat.completions.create({
-      messages: [{"role": "system", "content": "Given a journal entry, your job is to create a detailed but concise visual description of a humorous image that captures the sentiment of the following journal and uses cats as the main character(s). This is the journal entry: " + entry + "\""}],
+      messages: [{"role": "system", "content": "Given a journal entry, your job is to create a detailed but concise visual description of a \
+      humorous image that captures the sentiment of the following journal and uses cats as the main character(s) and no humans. \
+      This is the journal entry: " + entry + "\""}],
       model: "gpt-3.5-turbo",
     });
     console.log('[SUCCESS] Generated Image Creation Prompt');
@@ -84,7 +86,7 @@ function App() {
 
   const handleImagine = () => {
     setUsedEntry(journalEntry);
-    console.log('[SUCCESS] Imagine Started.')
+    console.log('[SUCCESS] Imagine Started')
   }
 
   return (
