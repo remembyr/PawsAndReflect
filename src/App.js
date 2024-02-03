@@ -15,20 +15,20 @@ function App() {
 
   async function generateDescription(entry) {
     const response = await openai.chat.completions.create({
-      messages: [{"role": "system", "content": "Generate a concise but detailed description of a funny image where the main characters are all cats. No humans. \
-      The description should capture the actions and feelings described in the following journal entry. This is the journal entry: \" " + entry + "\""}],
+      messages: [{"role": "system", "content": "Given a journal entry, your job is to create a detailed but concise visual description of a humorous image that captures the sentiment of the following journal and uses cats as the main character(s). This is the journal entry: " + entry + "\""}],
       model: "gpt-3.5-turbo",
     });
-    console.log(response);
+    console.log('[SUCCESS] Generated Image Creation Prompt');
     return response.choices[0].message.content;
   }
 
 
   async function generateImageFromDescription(description) {
-      const imageResponse = await openai.images.generate({ model: "dall-e-3", prompt:description});
+      const imageResponse = await openai.images.generate({ model: "dall-e-3", prompt:'No Humans, Only cats, One cat, Cute, Funny, ' + description});
       const URLResponse = imageResponse.data[0].url; // This returns the URL of the generated image
       setImageURL(URLResponse);
       setImageExists(true);
+      console.log('[SUCCESS] Generated Image URL');
   }
 
   async function entryToImage(entry) {
@@ -84,6 +84,7 @@ function App() {
 
   const handleImagine = () => {
     setUsedEntry(journalEntry);
+    console.log('[SUCCESS] Imagine Started.')
   }
 
   return (
@@ -114,7 +115,7 @@ function App() {
         <div className='col-md-5'>
           <div className='containerGreen container leftSide'>
           {(imageExists && !isLoading) ? 
-            <img src={imageURL} alt="Journal Entry Image"/> : 
+            <img src={imageURL} alt="Journal Entry Image" class="responsiveImage"/> : 
             <div className='imageContainer'>
               <span style={{paddingLeft: 10, paddingRight: 10}}>Hit "Imagine" to generate an image.</span>
             </div>}
