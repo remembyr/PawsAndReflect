@@ -58,7 +58,7 @@ function App() {
     setUsedEntry('');
   }, [entryToImagine])
 
-  const handleDownload = () => {
+  const handleDownloadText = () => {
     const blob = new Blob([journalEntry], { type: 'text/plain' });
     const link = document.createElement('a');
     const objectURL = URL.createObjectURL(blob);
@@ -73,6 +73,23 @@ function App() {
     URL.revokeObjectURL(objectURL);
 
     document.body.removeChild(link);
+  };
+
+  const handleDownloadImage = () => {
+    if (imageExists) {
+      // Create a link element
+      const link = document.createElement('a');
+  
+      // Set the link's href to the imageURL
+      link.href = imageURL;
+      link.target = '_blank';
+      link.download = 'journalImage.png';
+  
+      // Append the link to the document, trigger the download, and then remove the link
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
   };
 
   const handleClear = () => {
@@ -169,8 +186,8 @@ function App() {
         </div>
         <div className='col-md-2'>
           <div className='containerGreen container leftSide'>
-              <button className="menu-button" onClick={handleDownload}>Download Entry</button><br></br>
-              <button className="menu-button" >Download Image</button><br></br>
+              <button className="menu-button" onClick={handleDownloadText}>Download Entry</button><br></br>
+              <button className="menu-button" onClick={handleDownloadImage}>Download Image</button><br></br>
               <button className="menu-button" onClick={handleClear}>Clear Text</button><br></br>
               <button className="menu-button" onClick={handleClearImage}>Clear Image</button><br></br>
               <button className="menu-button" onClick={openHelpModal}>Help</button>
