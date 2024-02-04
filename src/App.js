@@ -29,7 +29,7 @@ function App() {
 
 
   async function generateImageFromDescription(description) {
-      const imageResponse = await openai.images.generate({ model: "dall-e-3", prompt:'No Humans, Only cats, One cat, Cute, Funny, Cartoon style: ' + description});
+      const imageResponse = await openai.images.generate({ model: "dall-e-3", prompt:'No Humans, Only cat, One cat, Cute: ' + description});
       const URLResponse = imageResponse.data[0].url; // This returns the URL of the generated image
       setImageURL(URLResponse);
       setImageExists(true);
