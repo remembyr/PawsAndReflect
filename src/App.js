@@ -29,7 +29,7 @@ function App() {
 
 
   async function generateImageFromDescription(description) {
-      const imageResponse = await openai.images.generate({ model: "dall-e-3", prompt:'No Humans, Only cats, One cat, Cute, Funny, ' + description});
+      const imageResponse = await openai.images.generate({ model: "dall-e-3", prompt:'No Humans, Only cats, One cat, Cute, Funny, Cartoon style: ' + description});
       const URLResponse = imageResponse.data[0].url; // This returns the URL of the generated image
       setImageURL(URLResponse);
       setImageExists(true);
@@ -74,23 +74,7 @@ function App() {
 
     document.body.removeChild(link);
   };
-
-  const handleDownloadImage = () => {
-    if (imageExists) {
-      // Create a link element
-      const link = document.createElement('a');
   
-      // Set the link's href to the imageURL
-      link.href = imageURL;
-      link.target = '_blank';
-      link.download = 'journalImage.png';
-  
-      // Append the link to the document, trigger the download, and then remove the link
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    }
-  };
 
   const handleClear = () => {
     setJournalEntry("");
@@ -187,7 +171,6 @@ function App() {
         <div className='col-md-2'>
           <div className='containerGreen container leftSide'>
               <button className="menu-button" onClick={handleDownloadText}>Download Entry</button><br></br>
-              <button className="menu-button" onClick={handleDownloadImage}>Download Image</button><br></br>
               <button className="menu-button" onClick={handleClear}>Clear Text</button><br></br>
               <button className="menu-button" onClick={handleClearImage}>Clear Image</button><br></br>
               <button className="menu-button" onClick={openHelpModal}>Help</button>
